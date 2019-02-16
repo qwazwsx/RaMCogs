@@ -25,6 +25,7 @@ class Leaderboard:
         self.bal_channel = 474801276408954891
         self.bal_message = 482438585736495104
 
+        print('[Leaderboard] task create')
         self.bot.loop.create_task(self.update_leaderboard())
         self.bot.loop.create_task(self.update_boss_leaderboard())
         self.bot.loop.create_task(self.update_leader_roles())
@@ -93,17 +94,24 @@ class Leaderboard:
     """
     async def update_leaderboard(self):
         while self == self.bot.get_cog('Leaderboard'):
-            #print('[Leaderboard] $ loop')
+            print('[Leaderboard][loop] top')
 
             channel = self.bot.get_channel(self.bal_channel)
             message = await channel.get_message(self.bal_message)
-
+    
+            print('[Leaderboard][loop] got channel and message')
+            
             leaderboard = await self._leaderboard(message)
 
+            print('[Leaderboard][loop] got leaderboard data')
+
+            
             if self.last_leaderboard != leaderboard:
+                print('[Leaderboard][loop] inside if, going to edit')
                 await message.edit(content=str(leaderboard))
                 self.last_leaderboard = Leaderboard
 
+            print('[Leaderboard][loop] end')
             await asyncio.sleep(5)
 
 
@@ -118,6 +126,7 @@ class Leaderboard:
         leaderboard in text form
     """
     async def _leaderboard(self, ctx):
+        print('[Leaderboard][fetch] top')
         top = 10
         show_global = False
 
@@ -143,6 +152,8 @@ class Leaderboard:
                 f"```md\n{header}{''.join(''.join(highscores[x:x + 10]))}```"
                 for x in range(0, len(highscores), 10)
             ]
+
+        print('[Leaderboard][fetch] end')
 
             return pages[0]
 
