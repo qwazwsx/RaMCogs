@@ -153,7 +153,7 @@ class Leaderboard:
                 for x in range(0, len(highscores), 10)
             ]
 
-        print('[Leaderboard][fetch] end')
+            print('[Leaderboard][fetch] end')
 
             return pages[0]
 
